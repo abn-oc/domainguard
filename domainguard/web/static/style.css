@@ -1,0 +1,10 @@
+body { font-family: system-ui, sans-serif; max-width: 900px; margin: 2rem auto; color: #1a1a1a; }
+header { font-size: 1.4rem; font-weight: 600; }
+nav { margin: 1rem 0; }
+table { border-collapse: collapse; margin: 0.75rem 0 1.5rem; width: 100%; }
+th, td { border: 1px solid #ccc; padding: 0.4rem 0.6rem; text-align: left; }
+th { background: #f3f3f3; }
+.flagged { color: #a00; font-weight: 600; }
+.benign { color: #070; }
+.error { color: #a00; font-weight: 600; }
+footer { margin-top: 2rem; font-size: 0.85rem; color: #666; }

@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}DomainGuard{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header><a href="{{ url_for('check') }}">DomainGuard</a> — text-only detector demo</header>
+  <nav><a href="{{ url_for('check') }}">Check a URL</a> | <a href="{{ url_for('scan_form') }}">Scan a DNS log</a></nav>
+  <main>{% block content %}{% endblock %}</main>
+  <footer>Student prototype. No network requests are made to the names you submit.</footer>
+</body>
+</html>

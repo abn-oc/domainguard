@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "domainguard"
+version = "0.1.0"
+description = "Text-only phishing URL and DGA domain detection prototype"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy", "pandas", "scikit-learn", "joblib", "Flask",
+    "tldextract", "matplotlib", "requests",
+]
+
+[project.scripts]
+domainguard = "domainguard.cli:main"
+
+[tool.setuptools]
+packages = [
+    "domainguard", "domainguard.dga", "domainguard.data",
+    "domainguard.evasion", "domainguard.scanner", "domainguard.web",
+]
+
+[tool.setuptools.package-data]
+domainguard = ["brands.json", "dga/wordlist.txt", "web/templates/*.html", "web/static/*.css"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

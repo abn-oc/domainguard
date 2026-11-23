@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Scan a DNS log — DomainGuard{% endblock %}
+{% block content %}
+<h1>Scan a DNS log</h1>
+<form method="post" enctype="multipart/form-data">
+  <input type="hidden" name="csrf_token" value="{{ token }}">
+  <label for="log">Zeek TSV, Zeek JSON lines or CSV (max 20 MB)</label>
+  <input id="log" type="file" name="log" accept=".log,.txt,.csv,.json">
+  <button type="submit">Scan</button>
+</form>
+<p><a href="{{ url_for('scan_sample') }}">Load the committed sample log</a></p>
+{% if error %}<p class="error">{{ error }}</p>{% endif %}
+{% if report %}
+<section>
+  <h2>Ranked clients</h2>
+  <p>Input: {{ report.input_file }} — {{ report.total_clients }} clients —
+     {{ report.malformed_lines }} malformed lines</p>
+  <table>
+    <tr><th>Client</th><th>Flagged domains</th><th>Flagged queries</th>
+        <th>Share</th><th>NXDOMAIN rate (display only)</th></tr>
+    {% for row in report.ranked_clients %}
+    <tr><td>{{ row.client }}</td><td>{{ row.flagged_domains }}</td>
+        <td>{{ row.flagged_queries }}</td><td>{{ '%.3f'|format(row.flagged_share) }}</td>
+        <td>{{ '%.3f'|format(row.nxdomain_rate) }}</td></tr>
+    {% endfor %}
+  </table>
+  <h3>Flagged domains</h3>
+  <p>{{ report.flagged_domains|join(', ') if report.flagged_domains else 'none' }}</p>
+</section>
+{% endif %}
+{% endblock %}

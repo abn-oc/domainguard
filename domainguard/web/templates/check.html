@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Check a URL — DomainGuard{% endblock %}
+{% block content %}
+<h1>Check a URL or domain</h1>
+<form method="post">
+  <input type="hidden" name="csrf_token" value="{{ token }}">
+  <label for="value">URL or domain</label>
+  <input id="value" name="value" size="60" value="{{ submitted }}" placeholder="hxxps://example[.]com/login">
+  <button type="submit">Check</button>
+</form>
+{% if error %}<p class="error">{{ error }}</p><p>Submitted: {{ submitted }}</p>{% endif %}
+{% if result %}
+<section>
+  <h2>Result</h2>
+  <table>
+    <tr><th>Input (defanged)</th><td>{{ result.input }}</td></tr>
+    <tr><th>Host (defanged)</th><td>{{ result.host }}</td></tr>
+    <tr><th>Registered domain</th><td>{{ result.registered_domain }}</td></tr>
+    <tr><th>Second-level label</th><td>{{ result.sld_label }}</td></tr>
+  </table>
+  <table>
+    <tr><th>Model</th><th>Verdict</th><th>Score</th><th>Threshold</th></tr>
+    {% for verdict in result.verdicts %}
+    <tr>
+      <td>{{ verdict.name }}</td>
+      <td class="{{ 'flagged' if verdict.flagged else 'benign' }}">{{ 'FLAGGED' if verdict.flagged else 'benign' }}</td>
+      <td>{{ verdict.score }}</td><td>{{ verdict.threshold }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <h3>Top contributing features</h3>
+  <table>
+    <tr><th>Feature</th><th>Value</th></tr>
+    {% for feature, value in result.features %}
+    <tr><td>{{ feature }}</td><td>{{ '%.2f'|format(value) }}</td></tr>
+    {% endfor %}
+  </table>
+</section>
+{% endif %}
+{% endblock %}
