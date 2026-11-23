@@ -151,7 +151,7 @@ def _ablations(seed: int) -> tuple[list[dict], dict]:
         for group in table:
             groups = tuple(g for g in table if g != group)
             result = models.train_model(name, seed, groups=groups, save=False)
-            scores = result["forest"].predict_proba(result["x_test"])[:, 1]
+            scores = result["artifact"]["forest"].predict_proba(result["x_test"])[:, 1]
             ablated = metrics(result["test_labels"], scores,
                               result["artifact"]["thresholds"]["threshold_1pct"])
             rows.append({
@@ -201,7 +201,7 @@ def _leave_one_family_out(full_model: dict, seed: int) -> tuple[list[dict], dict
         print(f"  LOFO {family}", flush=True)
         result = models.train_model("dga", seed, frames=frames, save=False)
         held_out = test[(test.label == 1) & (test.family == family)]
-        held_scores = result["forest"].predict_proba(result["x_test"])[:, 1]
+        held_scores = result["artifact"]["forest"].predict_proba(result["x_test"])[:, 1]
         held_mask = (test.label == 1) & (test.family == family)
         recall = float(np.mean(held_scores[held_mask.to_numpy()] >= threshold)) if held_mask.any() else 0.0
         benign_mask = (test.label == 0).to_numpy()
