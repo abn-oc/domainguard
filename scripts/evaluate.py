@@ -341,6 +341,13 @@ def _git_hash() -> str:
         return "not available in this run"
 
 
+def _load_manifest() -> dict:
+    """Return the download manifest, or an empty dict for a smoke clone."""
+    if not config.MANIFEST_PATH.exists():
+        return {}
+    return json.loads(config.MANIFEST_PATH.read_text(encoding="utf-8"))
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--quick", action="store_true",
@@ -353,9 +360,7 @@ def main(argv: list[str] | None = None) -> int:
     if not build_meta_path.exists():
         raise FileNotFoundError("processed data missing; run data/build.py first")
     build_meta = json.loads(build_meta_path.read_text(encoding="utf-8"))
-    manifest_path = config.MANIFEST_PATH
-    manifest = (json.loads(manifest_path.read_text(encoding="utf-8"))
-                if manifest_path.exists() else {})
+    manifest = _load_manifest()
 
     # Guardrail: the external dataset must never have entered training.
     for split in ("train", "val", "test"):

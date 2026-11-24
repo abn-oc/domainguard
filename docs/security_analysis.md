@@ -23,10 +23,10 @@ The table is filled from `docs/results.md` after the full multi-seed run.
 
 | Proposal target | Measured value | Met? |
 |---|---|---|
-| Phishing F1 above 0.95 at about 1% FPR | TODO | TODO |
-| DGA works on unseen families at about 1% FPR | TODO | TODO |
-| Evasion tests reported honestly | TODO | TODO |
-| CLI, DNS scanner and web demo run offline | TODO | TODO |
+| Phishing F1 above 0.95 at about 1% FPR | `phish_host` F1 0.8101 ± 0.0003 at test FPR 0.0105 ± 0.0002 (5 seeds) | Missed |
+| DGA works on unseen families at about 1% FPR | Leave-one-family-out mean recall 0.3163 (rand_alnum 0.4101, hex 0.1908, cv_pronounceable 0.0131, sparse_digits 0.9663, dict_join 0.0011); benign FPR 0.0072–0.0127 | Missed |
+| Evasion tests reported honestly | 6 URL rewrites and 4 dictionary-style DGA families reported in §11.6, including transforms that increased detection | Met |
+| CLI, DNS scanner and web demo run offline | 47 tests pass, including sockets and HTTP blocked during check/scan; web demo binds 127.0.0.1 with debug off | Met |
 
 ## What does not work
 

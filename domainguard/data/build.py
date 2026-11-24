@@ -22,6 +22,7 @@ from ..normalize import normalize
 
 SPLITS = ("train", "val", "test")
 SPLIT_FRACTIONS = (0.70, 0.15, 0.15)
+SMOKE_LINE_LIMIT = 50_000
 
 
 def _lines(path: Path, limit: int | None = None):
@@ -120,7 +121,7 @@ def build(n_per_class: int = config.N_PER_CLASS, seed: int = config.SEED,
         n_per_class = min(n_per_class, 300)
         # Smoke uses real downloaded rows, but only a small prefix of each file
         # so the end-to-end check finishes in under two minutes.
-    line_limit = 50_000 if smoke else None
+    line_limit = SMOKE_LINE_LIMIT if smoke else None
 
     manifest_path = config.MANIFEST_PATH
     manifest = json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.exists() else {}

@@ -87,10 +87,10 @@ Full detail, including every seed, threshold and ablation, is in
 
 | Target | Measured result | Met? |
 |---|---|---|
-| Phishing F1 above 0.95 at about 1% FPR | TODO | TODO |
-| DGA on unseen families at about 1% FPR | TODO | TODO |
-| Evasion tests reported | TODO | TODO |
-| CLI / scanner / web demo offline | TODO | TODO |
+| Phishing F1 above 0.95 at about 1% FPR | `phish_host` F1 0.8101 ± 0.0003, FPR 0.0105 ± 0.0002 (5 seeds) | Missed |
+| DGA on unseen families at about 1% FPR | Leave-one-family-out mean recall 0.3163 (0.0011–0.9663 across 5 families), benign FPR 0.0072–0.0127; in-domain F1 0.8877 ± 0.0012 at FPR 0.0104 | Missed |
+| Evasion tests reported | 6 URL rewrites and 4 dictionary-style DGA families in `docs/results.md` §11.6 | Met |
+| CLI / scanner / web demo offline | 47 tests pass, including a network-blocked check/scan test and CSRF/web checks | Met |
 
 The dataset snapshot is dated 2026-11-23 (Tranco list `8PW6V`). Same method,
 data snapshot dated 2026-11-23: changing the feeds changes the numbers.
